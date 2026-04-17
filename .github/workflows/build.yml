@@ -1,0 +1,40 @@
+Name: Build patches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build patches
+    permissions:
+      contents: read
+      actions: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Gradle
+        uses: burrunan/gradle-cache-action@v1
+
+      - name: Build
+        env:
+          ORG_GRADLE_PROJECT_githubPackagesUsername: ${{ github.actor }}
+        run: ./gradlew :patches:buildAndroid clean
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: revanced-patches-${{ github.run_number }}
+          path: patches/build/*/patches*
+          if-no-files-found: error
+          retention-days: 1
