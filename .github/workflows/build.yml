@@ -27,7 +27,7 @@ jobs:
       - name: Build
         env:
           ORG_GRADLE_PROJECT_githubPackagesUsername: ${{ github.actor }}
-        run: ./gradlew :patches:buildAndroid clean
+        run: ./gradlew Build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
