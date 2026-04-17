@@ -1,4 +1,4 @@
-Name: Build patches
+- Name: Build patches
 
 on:
   workflow_dispatch:
