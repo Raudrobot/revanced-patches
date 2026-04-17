@@ -1,5 +1,3 @@
-- Name: Build patches
-
 on:
   workflow_dispatch:
   push:
